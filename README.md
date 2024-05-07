@@ -44,7 +44,7 @@ Il progetto dipende dalle seguenti librerie Python:
 Per eseguire l'applicazione:
 
 1. Installare le dipendenze richieste usando `pip install -r requirements.txt`.
-2. Eseguire l'applicazione Flask usando `python main.py`.
+2. Eseguire l'applicazione Flask usando `python3 main.py`.
 3. Accedere all'applicazione in un browser web all'indirizzo `http://localhost:5000`.
 
 ---
