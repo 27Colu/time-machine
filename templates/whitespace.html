@@ -1,0 +1,136 @@
+<html>
+<head>
+    <title>La macchina del Tempo</title>
+    <style type="text/css">
+        @font-face {
+            font-family: 'ProductSansB';
+            src: url({{ url_for('static', filename='ProductSans-Black.ttf') }});
+        }
+        @font-face {
+            font-family: 'ProductSansL';
+            src: url({{ url_for('static', filename='ProductSans-Light.ttf') }});
+        }
+        body{margin: 0px;}
+        a{font-size: 30px; color:black;}
+        td{padding: 12px 30px; text-align: center;}
+        #year{width: 90%; color: rgb(192, 191, 191); background-color: gray; outline: none; height: 20px;}
+        #out{font-size: 20px; padding: 0px; font-family: ProductSansL; color: white;}
+        #ybox{overflow: hidden; width: 50%; margin: 0 auto;}
+        #mbox{display: flex; margin-bottom:60px; flex-direction: column; width: 95%; vertical-align: middle; align-items: center;}
+        .vmbox{width: 100% !important; margin-bottom:10px !important;}
+        .vmbox h1 {font-size: 0px;}
+        .vmbox #urlbox {width: 50%;}
+        #mbox * {transition: all 0.8s;}
+        #frame{width: 100%; height: 100%;}
+        #urlbox{font-family: ProductSansL; width: 300px; height: 40px;}
+        footer p{color:green; text-align: center;}
+        h1{font-family: ProductSansB;  color: white;}
+        input[type="text"]{
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        div{animation: change-background 10s linear infinite}
+        @keyframes change-background {
+            0% {
+                background: #ff0000;
+            }
+            25% {
+                background: #0dff00;
+            }
+            50% {
+                background: #0008ff;
+            }
+            100% {
+                background: #ff0000;
+            }
+        }
+        #status{font-family: 'ProductSansB'; font-size:13px; margin: 0;padding: 0;text-align: center;}
+    </style>
+</head>
+<body>
+    <div>
+        <br>
+        <center>
+            <div id="mbox">
+                <h1>LA MACCHINA<br>DEL TEMPO</h1>
+                <br>
+                <input type="text" id="urlbox" placeholder="URL">
+            </div>
+            <div id="ybox">
+                    <input type="range" min="1996" max="2023" value="{{ data['year'] }}" id="year" name="year"><br>
+                    <a id="out">{{ data['year'] }}</a>
+                </div>
+                <br>
+            </div>
+            <p id="status"></p> 
+            <iframe id="frame"></iframe>
+        </center>
+    </div>
+    <script>
+        var slider = document.getElementById('year');
+        var label = document.getElementById('out');
+        
+        var mainbox = document.getElementById('mbox');
+        var urlbox = document.getElementById('urlbox');
+        var frame = document.getElementById('frame');
+        
+        var statusLabel = document.getElementById('status');
+        function setStatus(STATUS) { statusLabel.innerHTML = STATUS; }
+
+        let lastURL;
+        let lastINPUT;
+        let lastYEAR = slider.value
+
+        function makeRequest(url, params) {
+            function formatParams( params ){
+                return "?" + Object
+                        .keys(params)
+                        .map(function(key){
+                        return key+"="+encodeURIComponent(params[key])
+                        })
+                        .join("&");
+            }
+
+            var xmlHttp = new XMLHttpRequest();
+
+            xmlHttp.open("GET", url+formatParams(params), false);
+            xmlHttp.send(null);
+            return xmlHttp.responseText;
+        }
+
+        function getSite(url) {
+            result = makeRequest('web', { 'url': url });
+            lastURL = result;
+        }
+        function refreshFrame() {
+            if(typeof lastURL == 'undefined') { return; }
+            setStatus('Caricamento...')
+            if(lastYEAR != slider.value) { getSite(lastINPUT) }
+            frame.src = lastURL;
+        }
+        frame.onload = function() { setStatus(''); }
+
+        slider.oninput = function() { out.innerHTML = this.value; }
+        slider.onmouseup = function() {
+            result = makeRequest('set', { 'year': slider.value });
+            if(result == 'True') { refreshFrame(); }
+            else { alert('An error occurred!'); }
+        }
+
+        urlbox.onkeydown = function() {
+            if(event.key == 'Enter') {
+                setStatus('Controllo...')
+                document.activeElement.blur();
+                lastINPUT = this.value;
+                getSite(this.value);
+                refreshFrame();
+            }
+        }
+        urlbox.onchange = function() {
+            if(this.value.length > 0) { mbox.classList.add('vmbox'); }
+            else { mbox.classList.remove('vmbox'); }
+        }
+    </script>
+</body>
+</html>
