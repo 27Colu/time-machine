@@ -20,24 +20,17 @@ This document provides comprehensive documentation for the "Time Machine" projec
 The project consists of a Flask web application that uses the Wayback Machine's CDX API to retrieve archived versions of web pages based on user input. The application allows users to input a URL and select a specific year, then displays the archived version of the web page from that year.
 
 ### File Structure
-
+```sh
 .
-
 ├── main.py
-
 ├── requirements.txt
-
 ├── static
-
 │   ├── desktop.ini
-
 │   ├── ProductSans-Black.ttf
-
 │   └── ProductSans-Light.ttf
-
 └── templates
-
     └── whitespace.html
+```
 
 ### Dependencies
 
