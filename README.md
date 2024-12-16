@@ -22,13 +22,21 @@ The project consists of a Flask web application that uses the Wayback Machine's 
 ### File Structure
 
 .
+
 ├── main.py
+
 ├── requirements.txt
+
 ├── static
+
 │   ├── desktop.ini
+
 │   ├── ProductSans-Black.ttf
+
 │   └── ProductSans-Light.ttf
+
 └── templates
+
     └── whitespace.html
 
 ### Dependencies
