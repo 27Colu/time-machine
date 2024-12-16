@@ -21,10 +21,15 @@ The project consists of a Flask web application that uses the Wayback Machine's 
 
 ### File Structure
 
-- **main.py**: Flask application containing the server-side logic and endpoint definitions.
-- **template/whitespace.html**: HTML template file for the web interface.
-- **static/ProductSans-Black.ttf**: Font file for the web interface.
-- **static/ProductSans-Light.ttf**: Font file for the web interface.
+.
+├── main.py
+├── requirements.txt
+├── static
+│   ├── desktop.ini
+│   ├── ProductSans-Black.ttf
+│   └── ProductSans-Light.ttf
+└── templates
+    └── whitespace.html
 
 ### Dependencies
 
